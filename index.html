@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Personal Finance Tracker</h1>
+        <div class="hero">
+            <h2>Welcome to your budget dashboard</h2>
+            <p>Track income, manage expenses, and see your balance update instantly. This lightweight web app helps you stay on top of your daily spending with zero setup.</p>
+        </div>
+        
+        <div class="dashboard">
+            <div class="balance">
+                <h2>Your Balance</h2>
+                <p id="balance-amount">$0.00</p>
+            </div>
+            <div class="summary">
+                <div class="income">
+                    <h3>Income</h3>
+                    <p id="income-amount">$0.00</p>
+                </div>
+                <div class="expense">
+                    <h3>Expense</h3>
+                    <p id="expense-amount">$0.00</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="add-transaction">
+            <h3>Add New Transaction</h3>
+            <form id="transaction-form">
+                <div class="form-control">
+                    <label for="text">Description</label>
+                    <input type="text" id="text" placeholder="Enter description..." required>
+                </div>
+                <div class="form-control">
+                    <label for="amount">Amount <br>(negative - expense, positive - income)</label>
+                    <input type="number" id="amount" placeholder="Enter amount..." step="0.01" required>
+                </div>
+                <button type="submit" class="btn">Add Transaction</button>
+            </form>
+        </div>
+        
+        <div class="transaction-history">
+            <h3>Transaction History</h3>
+            <ul id="list" class="list">
+                <!-- Transactions will be added here -->
+            </ul>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
