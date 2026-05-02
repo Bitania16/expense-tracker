@@ -6,8 +6,9 @@ const listEl = document.getElementById('list');
 const formEl = document.getElementById('transaction-form');
 const textEl = document.getElementById('text');
 const amountEl = document.getElementById('amount');
+const typeButtons = document.querySelectorAll('.type-button');
+let selectedType = 'income';
 
-// Transactions array
 let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
 // Add transaction
@@ -15,11 +16,18 @@ function addTransaction(e) {
     e.preventDefault();
     
     const text = textEl.value.trim();
-    const amount = +amountEl.value;
+    let amount = +amountEl.value;
     
     if (text === '' || isNaN(amount) || amount === 0) {
         alert('Please enter valid description and amount');
         return;
+    }
+    
+    if (selectedType === 'expense' && amount > 0) {
+        amount = -amount;
+    }
+    if (selectedType === 'income' && amount < 0) {
+        amount = Math.abs(amount);
     }
     
     const transaction = {
@@ -60,9 +68,9 @@ function updateDashboard() {
         .reduce((acc, item) => acc + item, 0)
         .toFixed(2);
     
-    balanceEl.innerText = `$${total}`;
-    incomeEl.innerText = `$${income}`;
-    expenseEl.innerText = `$${Math.abs(expense)}`;
+    balanceEl.innerText = `Br ${total}`;
+    incomeEl.innerText = `Br ${income}`;
+    expenseEl.innerText = `Br ${Math.abs(expense)}`;
 }
 
 // Display transactions
@@ -74,7 +82,7 @@ function displayTransactions() {
         li.classList.add(transaction.amount > 0 ? 'income' : 'expense');
         
         li.innerHTML = `
-            ${transaction.text} <span>${transaction.amount > 0 ? '+' : ''}$${Math.abs(transaction.amount)}</span>
+            ${transaction.text} <span>${transaction.amount > 0 ? '+' : ''}Br ${Math.abs(transaction.amount)}</span>
             <button class="delete-btn" onclick="removeTransaction(${transaction.id})">x</button>
         `;
         
@@ -95,6 +103,12 @@ function updateLocalStorage() {
 
 // Event listeners
 formEl.addEventListener('submit', addTransaction);
+typeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        selectedType = button.dataset.type;
+        typeButtons.forEach(btn => btn.classList.toggle('selected', btn === button));
+    });
+});
 
 // Initialize app
 updateUI();
